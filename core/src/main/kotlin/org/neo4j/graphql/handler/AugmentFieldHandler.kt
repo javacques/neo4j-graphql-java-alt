@@ -50,12 +50,12 @@ class AugmentFieldHandler(
             if (field.inputValueDefinitions.find { it.name == ProjectionBase.OFFSET } == null) {
                 fieldBuilder.inputValueDefinition(input(ProjectionBase.OFFSET, TypeInt))
             }
-            if (field.inputValueDefinitions.find { it.name == ProjectionBase.ORDER_BY } == null) {
-                addOrdering(fieldType)?.let { orderingTypeName ->
-                    val orderType = ListType(NonNullType(TypeName(orderingTypeName)))
-                    fieldBuilder.inputValueDefinition(input(ProjectionBase.ORDER_BY, orderType))
-                }
-            }
+//            if (field.inputValueDefinitions.find { it.name == ProjectionBase.ORDER_BY } == null) {
+//                addOrdering(fieldType)?.let { orderingTypeName ->
+//                    val orderType = ListType(NonNullType(TypeName(orderingTypeName)))
+//                    fieldBuilder.inputValueDefinition(input(ProjectionBase.ORDER_BY, orderType))
+//                }
+//            }
             if (!schemaConfig.useWhereFilter && schemaConfig.query.enabled && !schemaConfig.query.exclude.contains(fieldType.name)) {
                 // legacy support
                 val relevantFields = fieldType

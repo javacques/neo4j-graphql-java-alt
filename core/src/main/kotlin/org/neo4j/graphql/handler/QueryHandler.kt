@@ -54,10 +54,10 @@ class QueryHandler private constructor(schemaConfig: SchemaConfig) : BaseDataFet
                     .inputValueDefinition(input(FIRST, TypeInt))
                     .inputValueDefinition(input(OFFSET, TypeInt))
 
-                val orderingTypeName = addOrdering(type)
-                if (orderingTypeName != null) {
-                    builder.inputValueDefinition(input(ORDER_BY, ListType(NonNullType(TypeName(orderingTypeName)))))
-                }
+//                val orderingTypeName = addOrdering(type)
+//                if (orderingTypeName != null) {
+//                    builder.inputValueDefinition(input(ORDER_BY, ListType(NonNullType(TypeName(orderingTypeName)))))
+//                }
             }
             val def = builder.build()
             addQueryField(def)
