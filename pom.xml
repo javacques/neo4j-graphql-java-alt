@@ -60,6 +60,13 @@
         <url>git@github.com:neo4j-graphql/neo4j-graphql-java.git</url>
     </scm>
 
+    <distributionManagement>
+        <repository>
+            <id>deffun-repo</id>
+            <url>https://repo.deffun.io/releases</url>
+        </repository>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
