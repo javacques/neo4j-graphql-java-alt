@@ -3,6 +3,7 @@ package org.neo4j.graphql
 import graphql.language.*
 import graphql.schema.*
 import graphql.schema.idl.RuntimeWiring
+import graphql.schema.idl.RuntimeWiring.Builder
 import graphql.schema.idl.ScalarInfo.GRAPHQL_SPECIFICATION_SCALARS_DEFINITIONS
 import graphql.schema.idl.SchemaGenerator
 import graphql.schema.idl.SchemaParser
@@ -41,10 +42,10 @@ class SchemaBuilder(
          */
         @JvmStatic
         @JvmOverloads
-        fun buildSchema(sdl: String, config: SchemaConfig = SchemaConfig(), dataFetchingInterceptor: DataFetchingInterceptor? = null): GraphQLSchema {
+        fun buildSchema(sdl: String, config: SchemaConfig = SchemaConfig(), dataFetchingInterceptor: DataFetchingInterceptor? = null, builder: Builder = RuntimeWiring.newRuntimeWiring()): GraphQLSchema {
             val schemaParser = SchemaParser()
             val typeDefinitionRegistry = schemaParser.parse(sdl)
-            return buildSchema(typeDefinitionRegistry, config, dataFetchingInterceptor)
+            return buildSchema(typeDefinitionRegistry, config, dataFetchingInterceptor, builder)
         }
 
         /**
@@ -55,9 +56,8 @@ class SchemaBuilder(
          */
         @JvmStatic
         @JvmOverloads
-        fun buildSchema(typeDefinitionRegistry: TypeDefinitionRegistry, config: SchemaConfig = SchemaConfig(), dataFetchingInterceptor: DataFetchingInterceptor? = null): GraphQLSchema {
+        fun buildSchema(typeDefinitionRegistry: TypeDefinitionRegistry, config: SchemaConfig = SchemaConfig(), dataFetchingInterceptor: DataFetchingInterceptor? = null, builder: Builder = RuntimeWiring.newRuntimeWiring()): GraphQLSchema {
 
-            val builder = RuntimeWiring.newRuntimeWiring()
             val codeRegistryBuilder = GraphQLCodeRegistry.newCodeRegistry()
             val schemaBuilder = SchemaBuilder(typeDefinitionRegistry, config)
             schemaBuilder.augmentTypes()
@@ -147,7 +147,7 @@ class SchemaBuilder(
      * Register scalars of this library in the [RuntimeWiring][@param builder]
      * @param builder a builder to create a runtime wiring
      */
-    fun registerScalars(builder: RuntimeWiring.Builder) {
+    fun registerScalars(builder: Builder) {
         typeDefinitionRegistry.scalars()
             .filterNot { entry -> GRAPHQL_SPECIFICATION_SCALARS_DEFINITIONS.containsKey(entry.key) }
             .forEach { (name, definition) ->
@@ -169,7 +169,7 @@ class SchemaBuilder(
      * Register type name resolver in the [RuntimeWiring][@param builder]
      * @param builder a builder to create a runtime wiring
      */
-    fun registerTypeNameResolver(builder: RuntimeWiring.Builder) {
+    fun registerTypeNameResolver(builder: Builder) {
         typeDefinitionRegistry
             .getTypes(InterfaceTypeDefinition::class.java)
             .forEach { typeDefinition ->

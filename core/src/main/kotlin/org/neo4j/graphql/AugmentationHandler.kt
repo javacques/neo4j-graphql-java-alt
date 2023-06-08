@@ -191,15 +191,15 @@ abstract class AugmentationHandler(
             return (optionsType as? InputObjectTypeDefinition)?.name
                     ?: throw IllegalStateException("Ordering type $type.name is already defined but not an input type")
         }
-        val sortTypeName = addSortInputType(type)
+//        val sortTypeName = addSortInputType(type)
         val optionsTypeBuilder = InputObjectTypeDefinition.newInputObjectDefinition().name(optionsName)
-        if (sortTypeName != null) {
-            optionsTypeBuilder.inputValueDefinition(input(
-                    ProjectionBase.SORT,
-                    ListType(NonNullType(TypeName(sortTypeName))),
-                    "Specify one or more $sortTypeName objects to sort ${English.plural(type.name)} by. The sorts will be applied in the order in which they are arranged in the array.")
-            )
-        }
+//        if (sortTypeName != null) {
+//            optionsTypeBuilder.inputValueDefinition(input(
+//                    ProjectionBase.SORT,
+//                    ListType(NonNullType(TypeName(sortTypeName))),
+//                    "Specify one or more $sortTypeName objects to sort ${English.plural(type.name)} by. The sorts will be applied in the order in which they are arranged in the array.")
+//            )
+//        }
         optionsTypeBuilder
             .inputValueDefinition(input(ProjectionBase.LIMIT, TypeInt, "Defines the maximum amount of records returned"))
             .inputValueDefinition(input(ProjectionBase.SKIP, TypeInt, "Defines the amount of records to be skipped"))
