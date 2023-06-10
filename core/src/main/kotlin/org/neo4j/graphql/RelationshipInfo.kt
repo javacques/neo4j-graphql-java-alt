@@ -47,16 +47,16 @@ data class RelationshipInfo<TYPE>(
                     type.name,
                     relType,
                     direction,
-                    relDirective.getMandatoryArgument(DirectiveConstants.RELATION_FROM),
-                    relDirective.getMandatoryArgument(DirectiveConstants.RELATION_TO)
+                    "_" + relDirective.getMandatoryArgument(DirectiveConstants.RELATION_FROM),
+                    "_" + relDirective.getMandatoryArgument(DirectiveConstants.RELATION_TO)
             )
         }
 
         fun create(type: ImplementingTypeDefinition<*>, registry: TypeDefinitionRegistry): RelationshipInfo<ImplementingTypeDefinition<*>>? {
             val relType = type.getDirectiveArgument<String>(registry, DirectiveConstants.RELATION, DirectiveConstants.RELATION_NAME)
                     ?: return null
-            val startField = type.getMandatoryDirectiveArgument<String>(registry, DirectiveConstants.RELATION, DirectiveConstants.RELATION_FROM)
-            val endField = type.getMandatoryDirectiveArgument<String>(registry, DirectiveConstants.RELATION, DirectiveConstants.RELATION_TO)
+            val startField = "_" + type.getMandatoryDirectiveArgument<String>(registry, DirectiveConstants.RELATION, DirectiveConstants.RELATION_FROM)
+            val endField = "_" + type.getMandatoryDirectiveArgument<String>(registry, DirectiveConstants.RELATION, DirectiveConstants.RELATION_TO)
             val direction = type.getDirectiveArgument<String>(registry, DirectiveConstants.RELATION, DirectiveConstants.RELATION_DIRECTION)
                 ?.let { RelationDirection.valueOf(it) }
                     ?: RelationDirection.OUT
