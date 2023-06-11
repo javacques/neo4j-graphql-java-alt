@@ -247,6 +247,15 @@ open class ProjectionBase(
         return projectSelection(propertyContainer, variable, selectedFields, nodeType, env, variableSuffix)
     }
 
+    /* TODO Use this instead of { .name } to w/a Agens
+    "CREATE (createPerson:Person {\n" +
+                    "     name: \$createPersonName\n" +
+                    "})\n" +
+                    "WITH createPerson\n" +
+                    "RETURN {\n" +
+                    "     name: createPerson.name\n" +
+                    "} AS createPerson"
+     */
     private fun projectSelection(
             propertyContainer: PropertyContainer,
             variable: SymbolicName,
@@ -590,7 +599,7 @@ open class ProjectionBase(
         private val limit: Parameter<*>?
 
         init {
-            if (schemaConfig.queryOptionStyle == SchemaConfig.InputStyle.INPUT_TYPE) {
+            if (SchemaConfig.InputStyle.INPUT_TYPE == SchemaConfig.InputStyle.INPUT_TYPE) {
                 val options = arguments[OPTIONS] as? Map<*, *>
                 val defaultOptions = (fieldDefinition?.getArgument(OPTIONS)?.type as? GraphQLInputObjectType)
                 this.skip = convertOptionField(variable, options, defaultOptions, SKIP)

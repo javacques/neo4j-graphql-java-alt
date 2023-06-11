@@ -41,7 +41,7 @@ open class GraphQLConfiguration {
                 queryOptionStyle = SchemaConfig.InputStyle.INPUT_TYPE,
                 mutation = SchemaConfig.CRUDConfig(enabled = false))
         )
-        schemaBuilder.augmentTypes()
+        schemaBuilder.augmentTypes(schemaBuilder.typeDefinitionRegistry.types().values)
     }
 
     @DgsTypeDefinitionRegistry

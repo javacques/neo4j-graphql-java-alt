@@ -37,7 +37,7 @@ public class GraphQLConfiguration {
                 new SchemaConfig.CRUDConfig(),
                 new SchemaConfig.CRUDConfig(false, List.of()),
                 false, true, SchemaConfig.InputStyle.INPUT_TYPE, true, false));
-        schemaBuilder.augmentTypes();
+        schemaBuilder.augmentTypes(typeDefinitionRegistry.types().values);
 
         return builder -> builder
                 .configureRuntimeWiring(runtimeWiringBuilder -> {
